@@ -109,17 +109,16 @@ spec:
               readOnly: true
           ports:
             - containerPort: 9200
-              name: wazuh-indexer-api
+              name: indexer-api
             - containerPort: 9300
-              name: wazuh-indexer-nodes
+              name: indexer-cluster
   volumeClaimTemplates:
     - metadata:
         name: wazuh-indexer
-        namespace: wazuh-indexer-cluster
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: wazuh-storage
+        storageClassName: do-block-storage
         resources:
           requests:
             storage: 500Mi
