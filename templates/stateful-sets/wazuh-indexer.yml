@@ -51,7 +51,7 @@ spec:
         - name: wazuh-indexer
           image: '{{ .Values.wazuh-indexer.repository }}:{{ .Values.wazuh-indexer.tag }}'
           resources:
-            {{ toYaml .Values.wazuh-indexer.resources | indent 12 }}
+          {{ toYaml .Values.wazuh-indexer.resources | indent 2 }}
           env:
             - name: OPENSEARCH_JAVA_OPTS
               value: {{ .Values.wazuh-indexer.environments.java-opts }}
