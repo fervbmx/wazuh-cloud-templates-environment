@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: wazuh-indexer
+spec:
+  replicas: {{ include ".Values.wazuh-indexer.replicas" . }}
+  selector:
+    matchLabels:
+      app: wazuh-indexer
+  serviceName: wazuh-indexer
+  template:
+    metadata:
+      labels:
+        app: wazuh-indexer
+      name: wazuh-indexer
+    spec:
+      # Set the wazuh-indexer volume permissions so the wazuh-indexer user can use it
+      volumes:
+        - name: wazuh-indexer-certs
+          secret:
+            secretName: wazuh-indexer-certs
+        - name: wazuh-indexer-config
+          configMap:
+            name: wazuh-indexer-config
+      initContainers:
+        - name: volume-mount-hack
+          image: busybox
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          command:
+            - sh
+            - '-c'
+            - 'chown -R 1000:1000 /var/lib/wazuh-indexer'
+          volumeMounts:
+            - name: wazuh-indexer
+              mountPath: /var/lib/wazuh-indexer
+        - name: increase-the-vm-max-map-count
+          image: busybox
+          command:
+            - sysctl
+            - -w
+            - vm.max_map_count=262144
+          securityContext:
+            privileged: true
+      containers:
+        - name: wazuh-indexer
+          image: '{{ .Values.wazuh-indexer.repository }}:{{ .Values.wazuh-indexer.tag }}'
+          resources:
+            {{ toYaml .Values.wazuh-indexer.resources | indent 12 }}
+          env:
+            - name: OPENSEARCH_JAVA_OPTS
+              value: {{ .Values.wazuh-indexer.environments.java-opts }}
+            - name: CLUSTER_NAME
+              value: {{ .Values.wazuh-indexer.environments.cluster-name }}
+            - name: NETWORK_HOST
+              value: {{ .Values.wazuh-indexer.environments.network-host }}
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: DISCOVERY_SERVICE
+              value: {{ .Values.wazuh-indexer.environments.discovery-service }}
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DISABLE_INSTALL_DEMO_CONFIG
+              value: 'true'
+          securityContext:
+            capabilities:
+              add: ["SYS_CHROOT"]
+          volumeMounts:
+            - name: wazuh-indexer
+              mountPath: /var/lib/wazuh-indexer
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/node-key.pem
+              subPath: node-key.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/node.pem
+              subPath: node.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/root-ca.pem
+              subPath: root-ca.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/admin.pem
+              subPath: admin.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/admin-key.pem
+              subPath: admin-key.pem
+              readOnly: true
+            - name: wazuh-indexer-config
+              mountPath: /usr/share/wazuh-indexer/opensearch.yml
+              subPath: opensearch.yml
+              readOnly: true
+            - name: wazuh-indexer-config
+              mountPath: /usr/share/wazuh-indexer/opensearch-security/internal_users.yml
+              subPath: internal_users.yml
+              readOnly: true
+          ports:
+            - containerPort: 9200
+              name: wazuh-indexer-api
+            - containerPort: 9300
+              name: wazuh-indexer-nodes
+  volumeClaimTemplates:
+    - metadata:
+        name: wazuh-indexer
+        namespace: wazuh-indexer-cluster
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: wazuh-storage
+        resources:
+          requests:
+            storage: 500Mi

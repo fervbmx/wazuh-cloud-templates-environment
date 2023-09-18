@@ -1,0 +1,13 @@
+wazuh-indexer:
+  replicas: 0
+  repository: 'wazuh/wazuh-indexer'
+  tag: '4.8.0'
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1564Mi
+  environments:
+    java-opts: '-Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true'
+    cluster-name: 'wazuh'
+    network-host: '0.0.0.0'
+    discovery-service: 'wazuh-indexer'
