@@ -4,9 +4,9 @@ metadata:
   name: wazuh-indexer-config
 data:
   opensearch.yml: |-
-    cluster.name: {{ .Values.wazuh-indexer.environments.cluster-name }}
+    cluster.name: {{ .Values.indexer.environments.cluster_name }}
     node.name: 'wazuh-indexer'
-    network.host: {{ .Values.wazuh-indexer.environments.network-host }}
+    network.host: {{ .Values.indexer.environments.network_host }}
     discovery.seed_hosts: wazuh-indexer-0.wazuh-indexer
     cluster.initial_master_nodes:
       - wazuh-indexer-0

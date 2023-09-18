@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: wazuh-indexer
 spec:
-  replicas: {{ include ".Values.wazuh-indexer.replicas" . }}
+  replicas: {{ .Values.indexer.replicas }}
   selector:
     matchLabels:
       app: wazuh-indexer
@@ -49,22 +49,24 @@ spec:
             privileged: true
       containers:
         - name: wazuh-indexer
-          image: '{{ .Values.wazuh-indexer.repository }}:{{ .Values.wazuh-indexer.tag }}'
+          image: '{{ .Values.indexer.repository }}:{{ .Values.indexer.tag }}'
+          {{- if .Values.indexer.resources }}
           resources:
-          {{ toYaml .Values.wazuh-indexer.resources | indent 2 }}
+            {{- toYaml .Values.indexer.resources | nindent 12 }}
+          {{- end }}
           env:
             - name: OPENSEARCH_JAVA_OPTS
-              value: {{ .Values.wazuh-indexer.environments.java-opts }}
+              value: {{ .Values.indexer.environments.java_opts }}
             - name: CLUSTER_NAME
-              value: {{ .Values.wazuh-indexer.environments.cluster-name }}
+              value: {{ .Values.indexer.environments.cluster_name }}
             - name: NETWORK_HOST
-              value: {{ .Values.wazuh-indexer.environments.network-host }}
+              value: {{ .Values.indexer.environments.network_host }}
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
             - name: DISCOVERY_SERVICE
-              value: {{ .Values.wazuh-indexer.environments.discovery-service }}
+              value: {{ .Values.indexer.environments.discovery_service }}
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
