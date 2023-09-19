@@ -100,11 +100,11 @@ spec:
               subPath: admin-key.pem
               readOnly: true
             - name: wazuh-indexer-config
-              mountPath: /usr/share/wazuh-indexer/opensearch.yml
+              mountPath: /usr/share/wazuh-indexer/config/opensearch.yml
               subPath: opensearch.yml
               readOnly: true
             - name: wazuh-indexer-config
-              mountPath: /usr/share/wazuh-indexer/opensearch-security/internal_users.yml
+              mountPath: /usr/share/wazuh-indexer/plugins/opensearch-security/securityconfig/internal_users.yml
               subPath: internal_users.yml
               readOnly: true
           ports:
