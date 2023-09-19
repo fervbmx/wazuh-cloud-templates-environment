@@ -1,7 +1,7 @@
 indexer:
   replicas: 1
   repository: 'wazuh/wazuh-indexer'
-  tag: '4.8.0'
+  tag: '4.3.11'
   resources:
     limits:
       cpu: 500m

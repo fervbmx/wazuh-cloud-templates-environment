@@ -5,36 +5,57 @@ metadata:
 data:
   opensearch.yml: |-
     cluster.name: {{ .Values.indexer.environments.cluster_name }}
-    node.name: 'wazuh-indexer'
     network.host: {{ .Values.indexer.environments.network_host }}
-    discovery.seed_hosts: wazuh-indexer-0.wazuh-indexer
-    cluster.initial_master_nodes:
-      - wazuh-indexer-0
 
-    node.max_local_storage_nodes: "3"
-    path.data: /var/lib/wazuh-indexer
-    path.logs: /var/log/wazuh-indexer
-    plugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/certs/node.pem
-    plugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/certs/node-key.pem
-    plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/root-ca.pem
+    plugins.security.ssl.transport.enabled: true
     plugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/certs/node.pem
     plugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/certs/node-key.pem
     plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/root-ca.pem
-    plugins.security.ssl.http.enabled: true
     plugins.security.ssl.transport.enforce_hostname_verification: false
-    plugins.security.ssl.transport.resolve_hostname: false
-    plugins.security.authcz.admin_dn:
-      - CN=admin,O=Company,L=California,C=US
-    plugins.security.check_snapshot_restore_write_privileges: true
-    plugins.security.enable_snapshot_restore_privilege: true
-    plugins.security.nodes_dn:
-      - CN=*.wazuh-indexer,O=Company,L=California,C=US
-    plugins.security.restapi.roles_enabled:
-    - "all_access"
-    - "security_rest_api_access"
+
+    plugins.security.ssl.http.enabled: true
+    plugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/certs/node.pem
+    plugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/certs/node-key.pem
+    plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/root-ca.pem
+
+    plugins.security.audit.type: internal_opensearch
+    plugins.security.audit.config.index: "'security-auditlog-'YYYY.MM"
+
     plugins.security.allow_default_init_securityindex: true
-    cluster.routing.allocation.disk.threshold_enabled: false
+    plugins.security.authcz.admin_dn:
+      - CN=Admin,OU=Wazuh Cloud,O=Wazuh Cloud,ST=California,C=US
+    plugins.security.nodes_dn:
+      - 'CN=wazuh-indexer,OU=Wazuh Cloud,O=Wazuh Cloud,ST=California,C=US'
+
+    plugins.security.enable_snapshot_restore_privilege: true
+    plugins.security.check_snapshot_restore_write_privileges: true
+    plugins.security.restapi.roles_enabled: [
+      "all_access",
+      "security_rest_api_access",
+      "service_full_access"
+    ]
+
+    opendistro.index_state_management.history.enabled: false
+
+    node.max_local_storage_nodes: 5
+
+    cluster.routing.allocation.disk.watermark.low: "95%"
+    cluster.routing.allocation.disk.watermark.high: "95%"
+    cluster.routing.allocation.disk.watermark.flood_stage: "99%"
+
+    path.data: /usr/share/wazuh-indexer/data
+    path.logs: /var/log/wazuh-indexer
     compatibility.override_main_response_version: true
+    plugins.security.ssl.transport.resolve_hostname: false
+    plugins.security.system_indices.enabled: true
+    plugins.security.system_indices.indices: [
+      ".opendistro-alerting-config", 
+      ".opendistro-alerting-alert*", 
+      ".opendistro-reports-*", 
+      ".opendistro-notifications-*", 
+      ".opendistro-notebooks", 
+      ".replication-metadata-store"
+    ]
 
   internal_users.yml: |-
     _meta:
