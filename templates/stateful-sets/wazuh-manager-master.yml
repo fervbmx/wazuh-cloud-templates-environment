@@ -21,8 +21,8 @@ spec:
     spec:
       volumes:
         - name: wazuh-indexer-certs
-          secret:
-            secretName: wazuh-indexer-certs
+          persistentVolumeClaim:
+            claimName: wazuh-indexer-certs
         - name: wazuh-manager-config
           configMap:
             name: wazuh-manager-config
