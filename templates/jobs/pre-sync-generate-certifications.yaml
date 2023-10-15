@@ -16,6 +16,7 @@ spec:
             name: wazuh-manager-config
       containers:
         - image: wazuh/wazuh-certs-generator:0.0.1
+          name: 'wazuh-certs-generator'
       restartPolicy: Never
   volumeClaimTemplates:
     - metadata:
