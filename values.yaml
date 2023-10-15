@@ -12,10 +12,17 @@ indexer:
     network_host: '0.0.0.0'
     discovery_service: 'wazuh-indexer'
 wazuh:
-  replicas: 1
   repository: 'wazuh/wazuh-manager'
   tag: '4.5.0'
   resources:
     limits:
       cpu: 400m
       memory: 512Mi
+dasbhoard:
+  replicas: 1
+  repository: 'wazuh/wazuh-dasbhoard'
+  tag: '4.5.0'
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi

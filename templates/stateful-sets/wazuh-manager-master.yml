@@ -21,9 +21,9 @@ spec:
       name: wazuh-manager-master
     spec:
       volumes:
-        - name: wazuh-indexer-certs
+        - name: wazuh-certificates
           secret:
-            secretName: wazuh-indexer-certs
+            secretName: wazuh-certificates
         - name: wazuh-manager-master-config
           configMap:
             name: wazuh-manager-master-config
@@ -87,15 +87,15 @@ spec:
             - name: wazuh-manager-master
               mountPath: /var/lib/filebeat
               subPath: filebeat/var/lib/filebeat
-            - name: wazuh-indexer-certs
+            - name: wazuh-certificates
               mountPath: /etc/ssl/root-ca.pem
               subPath: root-ca.pem
               readOnly: true
-            - name: wazuh-indexer-certs
+            - name: wazuh-certificates
               mountPath: /etc/ssl/filebeat.pem
               subPath: filebeat.pem
               readOnly: true
-            - name: wazuh-indexer-certs
+            - name: wazuh-certificates
               mountPath: /etc/ssl/filebeat.key
               subPath: filebeat-key.pem
               readOnly: true
