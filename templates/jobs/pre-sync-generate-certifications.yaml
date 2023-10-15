@@ -8,6 +8,9 @@ spec:
   template:
     spec:
       volumes:
+        - name: wazuh-indexer-certs
+          persistentVolumeClaim:
+            claimName: wazuh-indexer-certs
         - name: wazuh-indexer-config
           configMap:
             name: wazuh-indexer-config
