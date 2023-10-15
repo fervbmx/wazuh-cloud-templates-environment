@@ -17,8 +17,8 @@ spec:
     spec:
       volumes:
         - name: wazuh-indexer-certs
-          persistentVolumeClaim:
-            claimName: wazuh-indexer-certs
+          secret:
+            secretName: wazuh-indexer-certs
         - name: wazuh-indexer-config
           configMap:
             name: wazuh-indexer-config
@@ -35,12 +35,10 @@ spec:
           command:
             - sh
             - '-c'
-            - 'chown -R 1000:1000 /var/lib/wazuh-indexer && chown -R 1000:1000 /usr/share/wazuh-indexer/certs'
+            - 'chown -R 1000:1000 /var/lib/wazuh-indexer'
           volumeMounts:
             - name: wazuh-indexer
               mountPath: /var/lib/wazuh-indexer
-            - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs
         - name: increase-the-vm-max-map-count
           image: busybox
           command:
@@ -82,7 +80,24 @@ spec:
             - name: wazuh-indexer
               mountPath: /var/lib/wazuh-indexer
             - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs
+              mountPath: /usr/share/wazuh-indexer/certs/root-ca.pem
+              subPath: root-ca.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/wazuh.indexer.key
+              subPath: wazuh.indexer-key.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/wazuh.indexer.pem
+              subPath: wazuh.indexer.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/admin.pem
+              subPath: admin.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/admin-key.pem
+              subPath: admin-key.pem
               readOnly: true
             - name: wazuh-indexer-config
               mountPath: /usr/share/wazuh-indexer/config/opensearch.yml
