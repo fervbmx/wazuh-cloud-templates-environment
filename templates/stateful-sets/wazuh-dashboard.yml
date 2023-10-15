@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wazuh-dashboard
+spec:
+  replicas: {{ .Values.dashboard.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "wazuh-dashboard"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "wazuh-dashboard"
+        app.kubernetes.io/version: {{ .Values.dashboard.tag }}
+      name: wazuh-dashboard
+    spec:
+      volumes:
+        - name: wazuh-certificates
+          secret:
+            secretName: wazuh-certificates
+        - name: wazuh-dashboard-config
+          configMap:
+            name: wazuh-dashboard-config
+      containers:
+        - name: wazuh-dashboard
+          image: '{{ .Values.dashboard.repository }}:{{ .Values.dashboard.tag }}'
+          {{- if .Values.dashboard.resources }}
+          resources:
+            {{- toYaml .Values.dashboard.resources | nindent 12 }}
+          {{- end }}
+          env:
+            - name: INDEXER_URL
+              value: https://wazuh-indexer-0.wazuh-indexer:9200
+            - name: INDEXER_USERNAME
+              value: admin
+            - name: INDEXER_PASSWORD
+              value: SecretPassword
+            - name: DASHBOARD_USERNAME
+              value: kibanaserver
+            - name: DASHBOARD_PASSWORD
+              value: kibanaserver
+            - name: SERVER_SSL_ENABLED
+              value: "true"
+            - name: SERVER_SSL_CERTIFICATE
+              value: /usr/share/wazuh-dashboard/certs/cert.pem
+            - name: SERVER_SSL_KEY
+              value: /usr/share/wazuh-dashboard/certs/key.pem
+            - name: WAZUH_API_URL
+              value: https://wazuh-manager-master-0.wazuh-cluster
+            - name: API_USERNAME
+              value: wazuh-wui
+            - name: API_PASSWORD
+              value: MyS3cr37P450r.*-
+          volumeMounts:
+            - name:  wazuh-dashboard-config
+              mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+              subPath: opensearch-dashboards.yml
+              readOnly: false
+            - name: wazuh-certificates
+              mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+              readOnly: true
+              subPath: dashboard.pem
+            - name: wazuh-certificates
+              mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+              readOnly: true
+              subPath: dashboard-key.pem
+            - name: wazuh-certificates
+              mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+              subPath: root-ca.pem
+              readOnly: true
+          ports:
+            - containerPort: 5601
+              name: dashboard
