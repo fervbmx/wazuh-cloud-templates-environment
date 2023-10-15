@@ -8,15 +8,19 @@ spec:
   template:
     spec:
       volumes:
-        - name: wazuh-indexer-certs
-          secret:
-            secretName: wazuh-indexer-certs
-        - name: wazuh-manager-config
+        - name: wazuh-indexer-config
           configMap:
-            name: wazuh-manager-config
+            name: wazuh-indexer-config
       containers:
         - image: wazuh/wazuh-certs-generator:0.0.1
           name: 'wazuh-certs-generator'
+          volumeMounts:
+            - name: wazuh-indexer-certs
+              mountPath: /certificates
+            - name: wazuh-indexer-config
+              mountPath: /config/certs.yml
+              subPath: certs.yml
+              readOnly: true
       restartPolicy: Never
   volumeClaimTemplates:
     - metadata:
