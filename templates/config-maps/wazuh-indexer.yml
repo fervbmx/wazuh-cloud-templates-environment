@@ -96,18 +96,20 @@ data:
       # Wazuh indexer server nodes
       indexer:
         - name: wazuh-indexer
-          dns: wazuh-indexer
+          dns:
+            - wazuh-manager
 
       # Wazuh server nodes
       # Use node_type only with more than one Wazuh manager
       server:
         - name: wazuh-manager
-          dns: wazuh-manager
-
+          dns:
+           - wazuh-manager
       # Wazuh dashboard node
       dashboard:
         - name: wazuh-dashboard
-          dns: wazuh-dashboard
+          dns:
+            - wazuh-dashboard
 
 
   
