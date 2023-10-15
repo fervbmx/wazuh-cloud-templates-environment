@@ -6,9 +6,9 @@ spec:
   selector:
     app.kubernetes.io/name: "wazuh-indexer"
   ports:
-    - name: indexer-api
+    - name: api
       port: 9200
       targetPort: api
-    - name: indexer-cluster
+    - name: cluster
       port: 9300
       targetPort: cluster
