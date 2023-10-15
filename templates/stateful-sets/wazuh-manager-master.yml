@@ -23,9 +23,9 @@ spec:
         - name: wazuh-indexer-certs
           secret:
             secretName: wazuh-indexer-certs
-        - name: wazuh-manager-config
+        - name: wazuh-manager-master-config
           configMap:
-            name: wazuh-manager-config
+            name: wazuh-manager-master-config
       containers:
         - name: wazuh-manager
           image: '{{ .Values.wazuh.repository }}:{{ .Values.wazuh.tag }}'
@@ -98,7 +98,7 @@ spec:
               mountPath: /etc/ssl/filebeat.key
               subPath: wazuh.manager-key.pem
               readOnly: true
-            - name: wazuh-manager-config
+            - name: wazuh-manager-master-config
               mountPath: /wazuh-config-mount/etc/ossec.conf
               subPath: ossec.conf
               readOnly: true 
