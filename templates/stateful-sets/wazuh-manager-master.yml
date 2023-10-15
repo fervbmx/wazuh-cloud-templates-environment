@@ -29,7 +29,7 @@ spec:
       containers:
         - name: wazuh-manager
           image: '{{ .Values.wazuh.repository }}:{{ .Values.wazuh.tag }}'
-          {{- if .Values.v.resources }}
+          {{- if .Values.wazuh.resources }}
           resources:
             {{- toYaml .Values.wazuh.resources | nindent 12 }}
           {{- end }}
