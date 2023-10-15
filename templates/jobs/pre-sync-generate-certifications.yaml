@@ -22,14 +22,4 @@ spec:
               subPath: certs.yml
               readOnly: true
       restartPolicy: Never
-  volumeClaimTemplates:
-    - metadata:
-        name: wazuh-indexer-certs
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        storageClassName: do-block-storage
-        resources:
-          requests:
-            storage: 20Mi
   backoffLimit: 2
