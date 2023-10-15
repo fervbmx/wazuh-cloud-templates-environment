@@ -35,10 +35,12 @@ spec:
           command:
             - sh
             - '-c'
-            - 'chown -R 1000:1000 /var/lib/wazuh-indexer'
+            - 'chown -R 1000:1000 /var/lib/wazuh-indexer && chown -R 1000:1000 /usr/share/wazuh-indexer/certs'
           volumeMounts:
             - name: wazuh-indexer
               mountPath: /var/lib/wazuh-indexer
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs
         - name: increase-the-vm-max-map-count
           image: busybox
           command:
