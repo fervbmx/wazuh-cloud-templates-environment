@@ -54,7 +54,7 @@ spec:
           volumeMounts:
             - name:  wazuh-dashboard-config
               mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
-              subPath: opensearch-dashboards.yml
+              subPath: opensearch_dashboard.yml
               readOnly: false
             - name: wazuh-certificates
               mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
