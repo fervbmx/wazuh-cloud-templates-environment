@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: "wazuh-indexer"
-  serviceName: wazuh.indexer
+  serviceName: wazuh-indexer
   template:
     metadata:
       labels:
