@@ -14,4 +14,8 @@ indexer:
 wazuh:
   replicas: 1
   repository: 'wazuh/wazuh-manager'
-  tag: '4.5.0'  
+  tag: '4.5.0'
+  resources:
+    limits:
+      cpu: 400m
+      memory: 512Mi

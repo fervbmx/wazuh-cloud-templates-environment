@@ -9,6 +9,7 @@ spec:
       app.kubernetes.io/name: "wazuh-manager"
       app.cloud.wazuh.com/node-type: "master"
   serviceName: wazuh-manager
+  podManagementPolicy: Parallel
   template:
     metadata:
       labels:
@@ -41,7 +42,7 @@ spec:
             - name: INDEXER_PASSWORD
               value: SecretPassword
             - name: FILEBEAT_SSL_VERIFICATION_MODE
-              value: full
+              value: 'full'
             - name: SSL_CERTIFICATE_AUTHORITIES
               value: /etc/ssl/root-ca.pem
             - name: SSL_CERTIFICATE
