@@ -18,9 +18,9 @@ wazuh:
     limits:
       cpu: 400m
       memory: 512Mi
-dasbhoard:
+dashboard:
   replicas: 1
-  repository: 'wazuh/wazuh-dasbhoard'
+  repository: 'wazuh/wazuh-dashboard'
   tag: '4.5.0'
   resources:
     limits:
