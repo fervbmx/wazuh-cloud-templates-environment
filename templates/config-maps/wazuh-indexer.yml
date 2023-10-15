@@ -5,7 +5,7 @@ metadata:
 data:
   opensearch.yml: |-
     network.host: {{ .Values.indexer.environments.network_host }}
-    node.name: "wazuh.indexer"
+    node.name: "wazuh-indexer"
     path.data: /var/lib/wazuh-indexer
     path.logs: /var/log/wazuh-indexer
     discovery.type: single-node
