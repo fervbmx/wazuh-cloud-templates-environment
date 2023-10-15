@@ -98,7 +98,7 @@ spec:
               mountPath: /etc/ssl/filebeat.key
               subPath: wazuh.manager-key.pem
               readOnly: true
-            - name: wazuh-manager
+            - name: wazuh-manager-config
               mountPath: /wazuh-config-mount/etc/ossec.conf
               subPath: ossec.conf
               readOnly: true 
