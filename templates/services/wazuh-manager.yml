@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "wazuh-manager"
+spec:
+  selector:
+    app.kubernetes.io/name: "wazuh-manager"
+  ports:
+    - name: cluster
+      port: 1516
+      targetPort: cluster
