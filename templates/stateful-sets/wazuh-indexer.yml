@@ -80,16 +80,16 @@ spec:
             - name: wazuh-indexer
               mountPath: /var/lib/wazuh-indexer
             - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/node-key.pem
+              subPath: node-key.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
+              mountPath: /usr/share/wazuh-indexer/certs/node.pem
+              subPath: node.pem
+              readOnly: true
+            - name: wazuh-indexer-certs
               mountPath: /usr/share/wazuh-indexer/certs/root-ca.pem
               subPath: root-ca.pem
-              readOnly: true
-            - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs/wazuh.indexer.key
-              subPath: wazuh.indexer-key.pem
-              readOnly: true
-            - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs/wazuh.indexer.pem
-              subPath: wazuh.indexer.pem
               readOnly: true
             - name: wazuh-indexer-certs
               mountPath: /usr/share/wazuh-indexer/certs/admin.pem

@@ -88,15 +88,15 @@ spec:
               subPath: filebeat/var/lib/filebeat
             - name: wazuh-indexer-certs
               mountPath: /etc/ssl/root-ca.pem
-              subPath: root-ca-manager.pem
+              subPath: root-ca.pem
               readOnly: true
             - name: wazuh-indexer-certs
               mountPath: /etc/ssl/filebeat.pem
-              subPath: wazuh.manager.pem
+              subPath: filebeat.pem
               readOnly: true
             - name: wazuh-indexer-certs
               mountPath: /etc/ssl/filebeat.key
-              subPath: wazuh.manager-key.pem
+              subPath: filebeat-key.pem
               readOnly: true
             - name: wazuh-manager-master-config
               mountPath: /wazuh-config-mount/etc/ossec.conf
