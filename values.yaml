@@ -5,7 +5,7 @@ indexer:
   resources:
     limits:
       cpu: 500m
-      memory: 1564Mi
+      memory: 1024Mi
   environments:
     java_opts: '-Xms512m -Xmx512m'
     cluster_name: 'wazuh'
@@ -25,4 +25,4 @@ dashboard:
   resources:
     limits:
       cpu: 500m
-      memory: 1Gi
+      memory: 512Mi
