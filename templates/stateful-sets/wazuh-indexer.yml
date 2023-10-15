@@ -6,15 +6,15 @@ spec:
   replicas: {{ .Values.indexer.replicas }}
   selector:
     matchLabels:
-      app: wazuh-indexer
+      app.kubernetes.io/name: "wazuh-indexer"
   serviceName: wazuh-indexer
   template:
     metadata:
       labels:
-        app: wazuh-indexer
+        app.kubernetes.io/name: "wazuh-indexer"
+        app.kubernetes.io/version: {{ .Values.indexer.tag }}
       name: wazuh-indexer
     spec:
-      # Set the wazuh-indexer volume permissions so the wazuh-indexer user can use it
       volumes:
         - name: wazuh-indexer-certs
           secret:
@@ -80,24 +80,7 @@ spec:
             - name: wazuh-indexer
               mountPath: /var/lib/wazuh-indexer
             - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/config/certs/node-key.pem
-              subPath: node-key.pem
-              readOnly: true
-            - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/config/certs/node.pem
-              subPath: node.pem
-              readOnly: true
-            - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/config/certs/root-ca.pem
-              subPath: root-ca.pem
-              readOnly: true
-            - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/config/certs/admin.pem
-              subPath: admin.pem
-              readOnly: true
-            - name: wazuh-indexer-certs
-              mountPath: /usr/share/wazuh-indexer/config/certs/admin-key.pem
-              subPath: admin-key.pem
+              mountPath: /usr/share/wazuh-indexer/certs
               readOnly: true
             - name: wazuh-indexer-config
               mountPath: /usr/share/wazuh-indexer/config/opensearch.yml
@@ -109,9 +92,9 @@ spec:
               readOnly: true
           ports:
             - containerPort: 9200
-              name: indexer-api
+              name: api
             - containerPort: 9300
-              name: indexer-cluster
+              name: cluster
   volumeClaimTemplates:
     - metadata:
         name: wazuh-indexer

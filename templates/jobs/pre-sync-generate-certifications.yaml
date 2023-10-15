@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: wazuh-indexer-generate-certificates-
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  template:
+    spec:
+      volumes:
+        - name: wazuh-indexer-certs
+          secret:
+            secretName: wazuh-indexer-certs
+        - name: wazuh-manager-config
+          configMap:
+            name: wazuh-manager-config
+      containers:
+        - image: wazuh/wazuh-certs-generator:0.0.1
+      restartPolicy: Never
+  volumeClaimTemplates:
+    - metadata:
+        name: wazuh-indexer-certs
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: do-block-storage
+        resources:
+          requests:
+            storage: 20Mi
+  backoffLimit: 2
