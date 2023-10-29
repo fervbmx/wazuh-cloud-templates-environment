@@ -66,6 +66,30 @@ spec:
               mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
               subPath: root-ca.pem
               readOnly: true
+          startupProbe:
+            tcpSocket:
+              port: 5601
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 20
+            successThreshold: 1
+            initialDelaySeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5601
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 10
+            successThreshold: 1
+            initialDelaySeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 5601
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 10
+            successThreshold: 1
+            initialDelaySeconds: 10
           ports:
             - containerPort: 5601
               name: dashboard
