@@ -108,6 +108,8 @@ spec:
               subPath: internal_users.yml
               readOnly: true
           readinessProbe:
+            tcpSocket:
+               port: 9200
             failureThreshold: 3
             initialDelaySeconds: 900
             periodSeconds: 10
