@@ -159,6 +159,7 @@ data:
         <!-- Aggregate vulnerabilities -->
         <provider name="nvd">
           <enabled>yes</enabled>
+          <update_from_year>2010</update_from_year>
           <update_interval>1h</update_interval>
         </provider>
 
@@ -353,4 +354,5 @@ data:
         <log_format>syslog</log_format>
         <location>/var/ossec/logs/active-responses.log</location>
       </localfile>
+
     </ossec_config>

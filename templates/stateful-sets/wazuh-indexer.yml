@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: wazuh-indexer
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   replicas: {{ .Values.indexer.replicas }}
   selector:
