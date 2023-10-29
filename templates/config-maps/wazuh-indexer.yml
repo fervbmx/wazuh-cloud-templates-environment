@@ -34,6 +34,7 @@ data:
     plugins.security.allow_default_init_securityindex: true
     cluster.routing.allocation.disk.threshold_enabled: false
   internal_users.yml: |-
+
     _meta:
       type: "internalusers"
       config_version: 2
