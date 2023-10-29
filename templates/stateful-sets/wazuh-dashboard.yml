@@ -37,6 +37,10 @@ spec:
               value: admin
             - name: INDEXER_PASSWORD
               value: SecretPassword
+            - name: DASHBOARD_USERNAME
+              value: kibanaserver
+            - name: DASHBOARD_PASSWORD
+              value: kibanaserver
             - name: SERVER_SSL_ENABLED
               value: "true"
             - name: SERVER_SSL_CERTIFICATE
