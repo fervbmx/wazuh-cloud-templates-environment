@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: wazuh-indexer
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   replicas: {{ .Values.indexer.replicas }}
   selector:
@@ -18,6 +18,9 @@ spec:
       name: wazuh-indexer
     spec:
       volumes:
+        - name: wazuh-indexer
+          persistentVolumeClaim:
+            claimName: wazuh-indexer
         - name: wazuh-certificates
           secret:
             secretName: wazuh-certificates
@@ -127,13 +130,3 @@ spec:
               name: api
             - containerPort: 9300
               name: cluster
-  volumeClaimTemplates:
-    - metadata:
-        name: wazuh-indexer
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        storageClassName: do-block-storage
-        resources:
-          requests:
-            storage: 500Mi
