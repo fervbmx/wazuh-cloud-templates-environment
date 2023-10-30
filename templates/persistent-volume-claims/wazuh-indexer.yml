@@ -8,6 +8,12 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  {{- if .Values.historyAndRollback }}
+  dataSource:
+    name: wazuh-indexer-snapshot
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
+  {{- end }}
   resources:
     requests:
       storage: 500Mi
