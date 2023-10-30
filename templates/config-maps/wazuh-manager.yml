@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: wazuh-manager-master-config
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 data:
   ossec.conf: |-
     <ossec_config>

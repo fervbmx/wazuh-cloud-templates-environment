@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: wazuh-dashboard-config
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 data:
   opensearch_dashboard.yml: |-
     server.host: 0.0.0.0
