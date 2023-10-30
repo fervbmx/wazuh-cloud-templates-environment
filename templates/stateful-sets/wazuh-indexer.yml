@@ -18,6 +18,9 @@ spec:
       name: wazuh-indexer
     spec:
       volumes:
+        - name: wazuh-indexer
+          persistentVolumeClaim:
+            claimName: wazuh-indexer
         - name: wazuh-certificates
           secret:
             secretName: wazuh-certificates
@@ -127,13 +130,3 @@ spec:
               name: api
             - containerPort: 9300
               name: cluster
-  volumeClaimTemplates:
-    - metadata:
-        name: wazuh-indexer
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        storageClassName: do-block-storage
-        resources:
-          requests:
-            storage: 500Mi

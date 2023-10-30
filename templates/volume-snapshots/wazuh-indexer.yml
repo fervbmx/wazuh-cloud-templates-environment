@@ -3,7 +3,7 @@ kind: VolumeSnapshot
 metadata:
   name: wazuh-indexer-snapshot
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   source:
     persistentVolumeClaimName: wazuh-indexer
