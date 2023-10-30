@@ -4,10 +4,10 @@ metadata:
   name: wazuh-indexer
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-    argocd.argoproj.io/sync-options: Prune=false
     {{- if .Values.rollback }}
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-options: Prune=true
     {{- end }}
 spec:
   accessModes:
