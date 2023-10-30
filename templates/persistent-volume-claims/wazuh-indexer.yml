@@ -5,14 +5,14 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/sync-options: Prune=false
-    {{- if .Values.historyAndRollback }}
+    {{- if .Values.rollback }}
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     {{- end }}
 spec:
   accessModes:
   - ReadWriteOnce
-  {{- if .Values.historyAndRollback }}
+  {{- if .Values.rollback }}
   dataSource:
     name: wazuh-indexer-snapshot
     kind: VolumeSnapshot
