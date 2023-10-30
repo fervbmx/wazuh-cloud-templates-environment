@@ -1,0 +1,9 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: wazuh-indexer-snapshot
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  source:
+    persistentVolumeClaimName: wazuh-indexer
