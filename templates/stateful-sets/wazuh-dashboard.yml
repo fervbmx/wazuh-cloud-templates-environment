@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wazuh-dashboard
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   replicas: {{ .Values.dashboard.replicas }}
   selector:
