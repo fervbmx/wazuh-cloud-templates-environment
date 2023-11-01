@@ -1,20 +1,20 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: pre-sync-job-1-
+  generateName: job-1
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   template:
     spec:
       containers:
-      - name: pre-sync-job-1
+      - name: job-1
         image: ubuntu
         command:
           - "/bin/bash"
           - "-c"
-          - "echo \"PreSync: pre-sync-job-1\""
+          - "echo \"PreSync: job-1\""
       restartPolicy: Never
   backoffLimit: 2

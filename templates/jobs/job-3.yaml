@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: job-3
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  template:
+    spec:
+      containers:
+      - name: job-3
+        image: ubuntu
+        command:
+          - "/bin/bash"
+          - "-c"
+          - "echo \"Sync: job-3\""
+      restartPolicy: Never
+  backoffLimit: 2

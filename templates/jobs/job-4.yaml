@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: job-4
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  template:
+    spec:
+      containers:
+      - name: job-4
+        image: ubuntu
+        command:
+          - "/bin/bash"
+          - "-c"
+          - "echo \"PostSync: job-4\""
+      restartPolicy: Never
+  backoffLimit: 2
