@@ -8,6 +8,7 @@ metadata:
 spec:
   template:
     spec:
+      serviceAccountName: velero
       containers:
       - name: create-backup
         image: velero/velero
