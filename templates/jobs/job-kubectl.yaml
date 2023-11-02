@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: job-kubectl
+  generateName: create-backup
   annotations:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
@@ -9,13 +9,15 @@ spec:
   template:
     spec:
       containers:
-      - name: job-kubectl
-        image: bitnami/kubectl
+      - name: create-backup
+        image: velero/velero
         command:
-          - "kubectl"
-          - "get"
-          - "pods"
-          - "-n"
-          - "env-ca35599bb1b8"
+          - velero
+        command:
+          - backup
+          - create
+          - {{ .Release.Namespace }}-{{ now }}
+          - --include-namespaces
+          - {{ .Release.Namespace }}
       restartPolicy: Never
   backoffLimit: 2
