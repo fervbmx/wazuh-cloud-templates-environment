@@ -8,7 +8,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: velero
+      serviceAccountName: {{ .Release.Namespace }}
       containers:
       - name: velero-create-backup
         image: velero/velero
