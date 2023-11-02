@@ -10,4 +10,4 @@ rules:
         - "velero.io"
     resources:
       - backups
-    verbs: []
+    verbs: ["create"]
