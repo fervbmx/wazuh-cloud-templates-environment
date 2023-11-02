@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: create-backups
+rules:
+  - apiGroups:
+        - "velero.io"
+    resources:
+      - backups
+    verbs: []
