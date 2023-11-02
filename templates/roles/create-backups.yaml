@@ -7,7 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 rules:
   - apiGroups:
-        - "velero.io"
+      - "velero.io"
     resources:
       - backups
     verbs: ["create"]
