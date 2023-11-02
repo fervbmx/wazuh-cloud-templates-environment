@@ -1,16 +1,16 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: create-backup
+  generateName: velero-create-backup
   annotations:
-    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   template:
     spec:
       serviceAccountName: velero
       containers:
-      - name: create-backup
+      - name: velero-create-backup
         image: velero/velero
         command:
           - '/velero'
@@ -19,5 +19,6 @@ spec:
           - {{ .Release.Namespace }}-{{ now | unixEpoch }}
           - '--include-namespaces'
           - '{{ .Release.Namespace }}'
+          - '--wait'
       restartPolicy: Never
   backoffLimit: 2
