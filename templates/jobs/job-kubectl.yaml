@@ -12,12 +12,11 @@ spec:
       - name: create-backup
         image: velero/velero
         command:
-          - velero
-        args:
-          - backup
-          - create
+          - 'velero'
+          - 'backup'
+          - 'create'
           - {{ .Release.Namespace }}-{{ now | date "2006-01-02T15:04:05" }}
-          - --include-namespaces
-          - {{ .Release.Namespace }}
+          - '--include-namespaces'
+          - '{{ .Release.Namespace }}'
       restartPolicy: Never
   backoffLimit: 2
