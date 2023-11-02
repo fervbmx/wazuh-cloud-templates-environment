@@ -13,7 +13,7 @@ spec:
         image: velero/velero
         command:
           - velero
-        command:
+        args:
           - backup
           - create
           - {{ .Release.Namespace }}-{{ now }}
